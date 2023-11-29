@@ -1,6 +1,8 @@
 name: CI/CD Apprentice 2
 run-name: ${{ github.actor }} started GitHub Actions 🚀
 on: [push]
+env:
+  mode: ${{ secrets.mode }}
 jobs:
   Test:
     runs-on: ubuntu-latest
