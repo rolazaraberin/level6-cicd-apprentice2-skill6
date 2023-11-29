@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const databaseName = process.env.mode as string;
+if (!databaseName) throw new Error("ERROR: process.env is not configured");
 const AppDataSource = getDataSource(databaseName) as DataSource;
 
 export default AppDataSource;

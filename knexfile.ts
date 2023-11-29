@@ -7,6 +7,7 @@ dotenv.config();
 
 // const knexConfig = getConfig("mysql");
 const databaseName = process.env.mode;
+if (!databaseName) throw new Error("ERROR: process.env is not configured");
 const knexConfig = getConfig(databaseName);
 // module.exports = knexConfig;
 export default knexConfig;

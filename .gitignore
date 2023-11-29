@@ -52,6 +52,9 @@ link-modules.bat
 *.code-workspace
 # .gitignore
 
+# Exemptions
+!build/src
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
