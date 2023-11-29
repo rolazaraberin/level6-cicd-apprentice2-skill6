@@ -3,6 +3,18 @@ run-name: ${{ github.actor }} started GitHub Actions 🚀
 on: [push]
 env:
   mode: ${{ secrets.mode }}
+  cockroachdb: ${{ secrets.cockroachdb }}
+  cockroachdbUser: ${{ secrets.cockroachdbUser }}
+  cockroachdbPassword: ${{ secrets.cockroachdbPassword }}
+  cockroachdbDatabase: ${{ secrets.cockroachdbDatabase }}
+  cockroachdbHost: ${{ secrets.cockroachdbHost }}
+  cockroachdbPort: ${{ secrets.cockroachdbPort }}
+  mysqlUser: ${{ secrets.mysqlUser }}
+  mysqlPassword: ${{ secrets.mysqlPassword }}
+  mysqlDatabase: ${{ secrets.mysqlDatabase }}
+  sendGridApiKey: ${{ secrets.sendGridApiKey }}
+  disableEmails: ${{ secrets.disableEmails }}
+  webpack: ${{ secrets.webpack }}
 jobs:
   Test:
     runs-on: ubuntu-latest
