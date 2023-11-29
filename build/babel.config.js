@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),module.exports={presets:["@babel/preset-env","@babel/preset-typescript"],sourceMaps:"inline"};
