@@ -3,6 +3,8 @@ const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Dotenv = require("dotenv-webpack");
+const dotenv = require("dotenv");
+dotenv.config();
 
 /*********************************************
  * EXPORT WEBPACK OPTIONS
@@ -13,33 +15,35 @@ module.exports = getWebpackOptions;
 function getWebpackOptions(env, args) {
   // console.log("ARGV: ", _args);
   return {
-    entry: getEntryOptions(env),
-    externales: getExternals(env),
-    devServer: getDevServerOptions(env),
+    entry: getEntryOptions(),
+    externals: getExternals(env),
+    devServer: getDevServerOptions(),
     devtool: getDevtoolOptions(),
     mode: getModeOptions(env, args),
     module: getModuleOptions(),
-    output: getOutputOptions(env),
+    output: getOutputOptions(),
     plugins: getPluginsOptions(env),
     resolve: getResolveOptions(),
+    target: getTargetOptions(),
   };
 }
 
-function getEntryOptions(env) {
+function getEntryOptions() {
   //INFO - https://webpack.js.org/configuration/entry-context/#entry
   const entryOptions = {
     index: "./src/index.js",
   };
 
-  if (env.webpack === "backend") entryOptions.index = "./build/src/index.js";
+  if (process.env.webpack === "backend")
+    entryOptions.index = "./build/src/index.js";
   return entryOptions;
 }
 function getExternals(env) {
   const externals = [];
-  if (env.webpack === "backend") externals.push(nodeExternals());
+  if (process.env.webpack === "backend") externals.push(nodeExternals());
   return externals;
 }
-function getDevServerOptions(env) {
+function getDevServerOptions() {
   //INFO - https://www.robinwieruch.de/webpack-react-router/
   //INFO - https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback
 
@@ -69,7 +73,7 @@ function getDevServerOptions(env) {
     compress: true,
     port: 8080,
   };
-  if (env.webpack === "backend") devServerOptions.port = 8000;
+  if (process.env.webpack === "backend") devServerOptions.port = 8000;
   return devServerOptions;
 }
 function getDevtoolOptions() {
@@ -89,9 +93,9 @@ function getModeOptions(env, args) {
   //BUILT IN ENVIRONMENT VARIABLES https://webpack.js.org/api/cli/#env
   console.log("ENV: ", env);
   console.log("ARGS: ", args);
-  let modeOptions = "productions";
+  let modeOptions = "production";
   if (env.WEBPACK_SERVE) modeOptions = "development";
-  if (args.mode) modeOptions = args.mode;
+  if (process.env.NODE_ENV) modeOptions = process.env.NODE_ENV;
   return modeOptions;
 }
 function getModuleOptions() {
@@ -152,7 +156,7 @@ function getModuleOptions() {
 function getPluginsOptions(env) {
   const pluginsOptions = [];
 
-  if (env.webpack === "frontend") {
+  if (process.env.webpack === "frontend") {
     //ONLY FOR FRONTEND
     //DYNAMICALLY INJECT JAVASCRIPT INTO HTML DOM HEAD
     //INFO - https://webpack.js.org/plugins/html-webpack-plugin
@@ -180,7 +184,7 @@ function getPluginsOptions(env) {
 
   return pluginsOptions;
 }
-function getOutputOptions(env) {
+function getOutputOptions() {
   //INFO - https://webpack.js.org/concepts/output
   //INFO - https://webpack.js.org/configuration/output/#outputfilename
   const outputOptions = {
@@ -188,7 +192,7 @@ function getOutputOptions(env) {
     path: path.resolve(__dirname, "./public"), //PLACE WEBPACK FILES IN DIST DIRECTORY
     clean: true, //DELETE THE OLD BUILD FILES
   };
-  if (env.webpack === "backend")
+  if (process.env.webpack === "backend")
     outputOptions.path = path.resolve(__dirname, "./dist");
   return outputOptions;
 }
@@ -225,4 +229,9 @@ function getResolveOptions() {
     },
   };
   return resolveOptions;
+}
+function getTargetOptions() {
+  let target = "web";
+  if (process.env.webpack === "backend") target = "node";
+  return target;
 }
