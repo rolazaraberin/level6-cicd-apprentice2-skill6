@@ -15,7 +15,7 @@
     "dist-build": "npm run webpack-backend",
     "prod-start": "node ./dist/index.js",
     "prod-build": "",
-    "prod-test": "jest --runInBand --config build/jest.config.production.ts",
+    "prod-test": "jest --runInBand --detectOpenHandles --config jest.config.production.ts",
     "github-push": "git push github main",
     "github-pull": "git pull github main",
     "github-add": "git remote add github",
