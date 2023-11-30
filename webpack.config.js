@@ -188,7 +188,7 @@ function getOutputOptions() {
   //INFO - https://webpack.js.org/concepts/output
   //INFO - https://webpack.js.org/configuration/output/#outputfilename
   const outputOptions = {
-    filename: "[name]-[hash].js", //USE CACHE-BUSTER FILENAMES
+    // filename: "[name]-[hash].js", //USE CACHE-BUSTER FILENAMES
     path: path.resolve(__dirname, "./public"), //PLACE WEBPACK FILES IN DIST DIRECTORY
     clean: true, //DELETE THE OLD BUILD FILES
   };
